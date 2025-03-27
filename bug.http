@@ -1,3 +1,4 @@
+### Fetch bug list
 ### Filter by txt
 get http://127.0.0.1:3030/api/bug?txt=g
 
@@ -20,3 +21,33 @@ get http://127.0.0.1:3030/api/bug?pageIdx=0&pageSize=2
 ### Get first page with default page size
 
 get http://127.0.0.1:3030/api/bug?pageIdx=0
+
+### Fetch a single bug
+
+get http://127.0.0.1:3030/api/bug/nB0zw
+
+### Delete a bug
+
+delete http://127.0.0.1:3030/api/bug/nB0zw
+
+### Add a bug
+
+post http://127.0.0.1:3030/api/bug
+content-type: application/json
+
+{
+    "title": "Having a bad day",
+    "severity": 4,
+    "description": "Things be going wrong!"
+}
+### Update a bug
+
+post http://127.0.0.1:3030/api/bug
+content-type: application/json
+
+{
+    "_id": "72yVP",
+    "title": "Having a realy bad day",
+    "severity": 4,
+    "description": "Things be going wrong!"
+}

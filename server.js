@@ -9,6 +9,8 @@ const app = express()
 // App Configuration
 app.use(express.static('public'))
 app.use(cookieParser())
+app.use(express.json())
+
 
 app.get('/api/bug', (req, res) => {
     const queryOptions = parseQueryParams(req.query)
@@ -44,9 +46,8 @@ function parseQueryParams(queryParams) {
 }
 
 app.post('/api/bug', (req, res) => {
-	const { title, description, severity, _id } = req.query
+	const { title, description, severity } = req.body
 	const bug = {
-		_id,
 		title,
 		description,
 		severity: +severity,
@@ -63,7 +64,7 @@ app.post('/api/bug', (req, res) => {
 })
 
 app.put('/api/bug/:bugId', (req, res) => {
-	const { title, description, severity, _id } = req.query
+	const { title, description, severity, _id } = req.body
 	const bug = {
 		_id,
 		title,
