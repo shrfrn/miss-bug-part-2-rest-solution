@@ -11,16 +11,9 @@ app.use(express.static('public'))
 app.use(cookieParser())
 
 app.get('/api/bug', (req, res) => {
-    const filterBy = {
-        txt: req.txt || '',
-        minSeverity: req.minSeverity || 0,
-        labels: req.labels || [],
-    }
-    const sortBy = {
-        sortField: req.sortField || '',
-        sortDir: req.sortDir || 1,
-    }
-	bugService.query({ ...filterBy, ...sortBy })
+    const queryOptions = parseQueryParams(req.query)
+
+	bugService.query(queryOptions)
 		.then(bugs => {
 			res.send(bugs)
 		})
@@ -29,6 +22,26 @@ app.get('/api/bug', (req, res) => {
 			res.status(400).send('Cannot get bugs')
 		})
 })
+
+function parseQueryParams(queryParams) {
+    const filterBy = {
+        txt: queryParams.txt || '',
+        minSeverity: +queryParams.minSeverity || 0,
+        labels: queryParams.labels || [],
+    }
+
+    const sortBy = {
+        sortField: queryParams.sortField || '',
+        sortDir: +queryParams.sortDir || 1,
+    }
+    
+    const pagination = {
+        pageIdx: queryParams.pageIdx !== undefined ? +queryParams.pageIdx : queryParams.pageIdx,
+        pageSize: +queryParams.pageSize || 3,
+    }
+
+    return { filterBy, sortBy, pagination }
+}
 
 app.post('/api/bug', (req, res) => {
 	const { title, description, severity, _id } = req.query
