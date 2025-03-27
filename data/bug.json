@@ -1,5 +1,15 @@
 [
   {
+    "_id": "fYlhR",
+    "severity": null,
+    "createdAt": 1743066844908
+  },
+  {
+    "_id": "sl0MU",
+    "severity": null,
+    "createdAt": 1743066831626
+  },
+  {
     "title": "Having a realy bad day",
     "description": "Things be going wrong!",
     "severity": 4,
@@ -19,19 +29,6 @@
     "description": "I'm am a description",
     "severity": 3,
     "createdAt": 1742489403172
-  },
-  {
-    "_id": "abcd",
-    "title": "Cannot save a Bug",
-    "description": "problem when clicking Save",
-    "severity": 2
-  },
-  {
-    "_id": "0Sp23",
-    "title": "hi",
-    "description": "baba",
-    "severity": 5,
-    "createdAt": 1694117290488
   },
   {
     "_id": "RJBVn",
