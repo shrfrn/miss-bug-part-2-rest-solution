@@ -5,6 +5,8 @@ const { useState, useEffect } = React
 
 export function BugFilter({ filterBy, onSetFilterBy }) {
 
+    console.log(filterBy)
+
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const labels = bugService.getLabels()
 
@@ -22,6 +24,9 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                 value = +value || ''
                 break
 
+            case 'radio':
+                value = target.value
+                break
             case 'checkbox':
                 value = target.checked
                 break
@@ -30,7 +35,10 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                 break
         }
 
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+        setFilterByToEdit(prevFilter => {
+            console.log({ ...prevFilter, [field]: value })
+            return ({ ...prevFilter, [field]: value })
+        })
     }
 
     function onSubmitFilter(ev) {
@@ -48,11 +56,67 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
 
                 <label htmlFor="minSeverity">Min Severity: </label>
                 <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
+                
+                <div className="sort-field">
+                    <label>
+                        <span>Title</span>
+                        <input
+                            type="radio"
+                            name="sortField"
+                            value="title"
+                            checked={filterByToEdit.sortField === 'title'}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label>
+                        <span>Severity</span>
+                        <input
+                            type="radio"
+                            name="sortField"
+                            value="severity"
+                            checked={filterByToEdit.sortField === 'severity'}            
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label>
+                        <span>Created At</span>
+                        <input
+                            type="radio"
+                            name="createdAt"
+                            value="createdAt"
+                            checked={filterByToEdit.sortField === 'createdAt'}                        
+                            onChange={handleChange}
+                        />
+                    </label>
+                </div>
+
+                <div className="sort-dir">
+                    <label>
+                        <span>Asce</span>
+                        <input
+                            type="radio"
+                            name="sortDir"
+                            value="1"
+                            checked={filterByToEdit.sortDir === "1"}                        
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label>
+                        <span>Desc</span>
+                        <input
+                            type="radio"
+                            name="sortDir"
+                            value="-1"
+                            onChange={handleChange}
+                            checked={filterByToEdit.sortDir === "-1"}                        
+                        />
+                    </label>
+                </div>
 
                 <LabelChooser 
                     labels={labels} 
-                    filterBy={filterBy} 
-                    onSetFilterBy={onSetFilterBy}/>
+                    filterBy={filterByToEdit} 
+                    onSetFilterBy={setFilterByToEdit}/>
             </form>
         </section>
     )
