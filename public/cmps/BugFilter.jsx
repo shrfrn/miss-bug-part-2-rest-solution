@@ -14,6 +14,14 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
 
+    function resetSort() {
+        setFilterByToEdit(prev => ({ ...prev, sortField: '', sortDir: 1 }))
+    }
+
+    function onResetFilter() {
+        setFilterByToEdit(prev => ({ ...prev, txt: '', minSeverity: 0 }))
+    }
+
     function handleChange({ target }) {
         const field = target.name
         let value = target.value
@@ -51,11 +59,15 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
         <section className="bug-filter">
             <h2>Filter</h2>
             <form onSubmit={onSubmitFilter}>
-                <label className="tag" htmlFor="txt">Text: </label>
-                <input value={txt} onChange={handleChange} type="text" placeholder="By Text" id="txt" name="txt" />
+                <div className="filter-by">
+                    <label className="tag" htmlFor="txt">Text: </label>
+                    <input value={txt} onChange={handleChange} type="text" placeholder="By Text" id="txt" name="txt" />
 
-                <label className="tag" htmlFor="minSeverity">Min Severity: </label>
-                <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
+                    <label className="tag" htmlFor="minSeverity">Min Severity: </label>
+                    <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
+
+                    <button onClick={onResetFilter}>Clear Filter</button>
+                </div>
                 
                 <div className="sort-by">
                     <div className="sort-field">
@@ -113,6 +125,8 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                             />
                         </label>
                     </div>
+
+                    <button onClick={resetSort}>Clear Sort</button>
                 </div>
 
                 <LabelChooser 
