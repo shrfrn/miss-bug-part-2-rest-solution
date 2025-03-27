@@ -17,9 +17,9 @@ export function LabelChooser({ labels, filterBy, onSetFilterBy }) {
         setSelectedLabels(prev => ({ ...prev, [name]: checked }))
     }
 
-    return <fieldset>
+    return <fieldset className="label-chooser">
         {labels.map((label) => 
-            <label key={label}>
+            <label key={label} className="tag">
                 <input 
                     onClick={handleChange} 
                     name={label}

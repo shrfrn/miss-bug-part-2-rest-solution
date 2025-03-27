@@ -51,66 +51,68 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
         <section className="bug-filter">
             <h2>Filter</h2>
             <form onSubmit={onSubmitFilter}>
-                <label htmlFor="txt">Text: </label>
+                <label className="tag" htmlFor="txt">Text: </label>
                 <input value={txt} onChange={handleChange} type="text" placeholder="By Text" id="txt" name="txt" />
 
-                <label htmlFor="minSeverity">Min Severity: </label>
+                <label className="tag" htmlFor="minSeverity">Min Severity: </label>
                 <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
                 
-                <div className="sort-field">
-                    <label>
-                        <span>Title</span>
-                        <input
-                            type="radio"
-                            name="sortField"
-                            value="title"
-                            checked={filterByToEdit.sortField === 'title'}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        <span>Severity</span>
-                        <input
-                            type="radio"
-                            name="sortField"
-                            value="severity"
-                            checked={filterByToEdit.sortField === 'severity'}            
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        <span>Created At</span>
-                        <input
-                            type="radio"
-                            name="createdAt"
-                            value="createdAt"
-                            checked={filterByToEdit.sortField === 'createdAt'}                        
-                            onChange={handleChange}
-                        />
-                    </label>
-                </div>
+                <div className="sort-by">
+                    <div className="sort-field">
+                        <label className="tag" >
+                            <span>Title</span>
+                            <input
+                                type="radio"
+                                name="sortField"
+                                value="title"
+                                checked={filterByToEdit.sortField === 'title'}
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <label className="tag" >
+                            <span>Severity</span>
+                            <input
+                                type="radio"
+                                name="sortField"
+                                value="severity"
+                                checked={filterByToEdit.sortField === 'severity'}            
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <label className="tag" >
+                            <span>Created At</span>
+                            <input
+                                type="radio"
+                                name="sortField"
+                                value="createdAt"
+                                checked={filterByToEdit.sortField === 'createdAt'}                        
+                                onChange={handleChange}
+                            />
+                        </label>
+                    </div>
 
-                <div className="sort-dir">
-                    <label>
-                        <span>Asce</span>
-                        <input
-                            type="radio"
-                            name="sortDir"
-                            value="1"
-                            checked={filterByToEdit.sortDir === "1"}                        
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        <span>Desc</span>
-                        <input
-                            type="radio"
-                            name="sortDir"
-                            value="-1"
-                            onChange={handleChange}
-                            checked={filterByToEdit.sortDir === "-1"}                        
-                        />
-                    </label>
+                    <div className="sort-dir">
+                        <label className="tag" >
+                            <span>Asce</span>
+                            <input
+                                type="radio"
+                                name="sortDir"
+                                value="1"
+                                checked={filterByToEdit.sortDir === "1"}                        
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <label className="tag" >
+                            <span>Desc</span>
+                            <input
+                                type="radio"
+                                name="sortDir"
+                                value="-1"
+                                onChange={handleChange}
+                                checked={filterByToEdit.sortDir === "-1"}                        
+                            />
+                        </label>
+                    </div>
                 </div>
 
                 <LabelChooser 
