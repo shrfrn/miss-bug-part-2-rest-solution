@@ -1,8 +1,12 @@
+import { bugService } from "../services/bug.service.remote.js"
+import { LabelChooser } from "./LabelChooser.jsx"
+
 const { useState, useEffect } = React
 
 export function BugFilter({ filterBy, onSetFilterBy }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+    const labels = bugService.getLabels()
 
     useEffect(() => {
         onSetFilterBy(filterByToEdit)
@@ -44,6 +48,11 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
 
                 <label htmlFor="minSeverity">Min Severity: </label>
                 <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
+
+                <LabelChooser 
+                    labels={labels} 
+                    filterBy={filterBy} 
+                    onSetFilterBy={onSetFilterBy}/>
             </form>
         </section>
     )

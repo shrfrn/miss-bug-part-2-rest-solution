@@ -46,12 +46,15 @@ function parseQueryParams(queryParams) {
 }
 
 app.post('/api/bug', (req, res) => {
-	const { title, description, severity } = req.body
+	const { title, description, severity, labels } = req.body
+    console.log(labels)
 	const bug = {
-		title,
+        title,
 		description,
 		severity: +severity,
+        labels: labels || [],
 	}
+    console.log(bug.labels)
 
 	bugService.save(bug)
 		.then(savedBug => {
@@ -64,12 +67,13 @@ app.post('/api/bug', (req, res) => {
 })
 
 app.put('/api/bug/:bugId', (req, res) => {
-	const { title, description, severity, _id } = req.body
+	const { title, description, severity, labels, _id } = req.body
 	const bug = {
 		_id,
 		title,
 		description,
 		severity: +severity,
+        labels: labels || [],
 	}
 
 	bugService.save(bug)

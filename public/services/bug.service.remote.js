@@ -5,7 +5,8 @@ export const bugService = {
     getById,
     save,
     remove,
-    getDefaultFilter
+    getDefaultFilter,
+    getLabels,
 }
 
 function query(queryOptions) {
@@ -34,5 +35,11 @@ function save(bug) {
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0 }
+    return { txt: '', minSeverity: 0, labels: [] }
+}
+
+function getLabels() {
+    return [
+        'back', 'front', 'critical', 'fixed', 'in progress', 'stuck'
+    ]
 }

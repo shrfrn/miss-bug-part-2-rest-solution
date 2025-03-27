@@ -14,8 +14,8 @@ const bugs = utilService.readJsonFile('data/bug.json')
 
 function query(queryOptions) {
     const { filterBy, sortBy, pagination } = queryOptions
-
     var bugsToReturn = [ ...bugs ]
+
     console.log(filterBy)
     if (filterBy.txt) {
         const regExp = new RegExp(filterBy.txt, 'i')
@@ -26,6 +26,12 @@ function query(queryOptions) {
     if (filterBy.minSeverity) {
         bugsToReturn = 
             bugsToReturn.filter(bug => bug.severity >= filterBy.minSeverity)
+    }
+
+    if (filterBy.labels && filterBy.labels.length > 0) {
+        bugsToReturn = 
+            bugsToReturn.filter(bug => 
+                filterBy.labels.every(label => bug?.labels?.includes(label)))
     }
 
     if (sortBy.sortField === 'severity' || sortBy.sortField === 'createdAt') {
