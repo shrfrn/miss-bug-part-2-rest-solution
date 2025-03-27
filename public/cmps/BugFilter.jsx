@@ -5,8 +5,6 @@ const { useState, useEffect } = React
 
 export function BugFilter({ filterBy, onSetFilterBy }) {
 
-    console.log(filterBy)
-
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const labels = bugService.getLabels()
 
@@ -44,7 +42,6 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
         }
 
         setFilterByToEdit(prevFilter => {
-            console.log({ ...prevFilter, [field]: value })
             return ({ ...prevFilter, [field]: value })
         })
     }
@@ -64,7 +61,7 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                     <input value={txt} onChange={handleChange} type="text" placeholder="By Text" id="txt" name="txt" />
 
                     <label className="tag" htmlFor="minSeverity">Min Severity: </label>
-                    <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
+                    <input value={minSeverity || ''} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
 
                     <button onClick={onResetFilter}>Clear Filter</button>
                 </div>

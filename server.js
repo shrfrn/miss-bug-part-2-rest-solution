@@ -38,53 +38,12 @@ function parseQueryParams(queryParams) {
     }
     
     const pagination = {
-        pageIdx: queryParams.pageIdx !== undefined ? +queryParams.pageIdx : queryParams.pageIdx,
+        pageIdx: queryParams.pageIdx !== undefined ? +queryParams.pageIdx || 0 : queryParams.pageIdx,
         pageSize: +queryParams.pageSize || 3,
     }
 
     return { filterBy, sortBy, pagination }
 }
-
-app.post('/api/bug', (req, res) => {
-	const { title, description, severity, labels } = req.body
-    console.log(labels)
-	const bug = {
-        title,
-		description,
-		severity: +severity,
-        labels: labels || [],
-	}
-    console.log(bug.labels)
-
-	bugService.save(bug)
-		.then(savedBug => {
-			res.send(savedBug)
-		})
-		.catch(err => {
-			loggerService.error('Cannot save bug', err)
-			res.status(400).send('Cannot save bug')
-		})
-})
-
-app.put('/api/bug/:bugId', (req, res) => {
-	const { title, description, severity, labels, _id } = req.body
-	const bug = {
-		_id,
-		title,
-		description,
-		severity: +severity,
-        labels: labels || [],
-	}
-
-	bugService.save(bug)
-		.then(savedBug => {
-			res.send(savedBug)
-		})
-		.catch(err => {
-			loggerService.error('Cannot save bug', err)
-			res.status(400).send('Cannot save bug')
-		})
-})
 
 app.get('/api/bug/:bugId', (req, res) => {
 	const { bugId } = req.params
@@ -102,8 +61,53 @@ app.get('/api/bug/:bugId', (req, res) => {
 		})
 })
 
+app.post('/api/bug', (req, res) => {
+	const { title, description, severity, labels } = req.body
+
+    if (!title || severity === undefined) return res.status(400).send('Missing required fields')
+
+	const bug = {
+        title,
+		description,
+		severity: +severity || 1,
+        labels: labels || [],
+	}
+
+	bugService.save(bug)
+		.then(savedBug => {
+			res.send(savedBug)
+		})
+		.catch(err => {
+			loggerService.error('Cannot save bug', err)
+			res.status(400).send('Cannot save bug')
+		})
+})
+
+app.put('/api/bug/:bugId', (req, res) => {
+	const { title, description, severity, labels, _id } = req.body
+
+    if ( !_id || !title || severity === undefined) return res.status(400).send('Missing required fields')
+    const bug = {
+		_id,
+		title,
+		description,
+		severity: +severity,
+        labels: labels || [],
+	}
+
+	bugService.save(bug)
+		.then(savedBug => {
+			res.send(savedBug)
+		})
+		.catch(err => {
+			loggerService.error('Cannot save bug', err)
+			res.status(400).send('Cannot save bug')
+		})
+})
+
 app.delete('/api/bug/:bugId', (req, res) => {
 	const { bugId } = req.params
+
 	bugService.remove(bugId)
 		.then(() => {
 			loggerService.info(`Bug ${bugId} removed`)

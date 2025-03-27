@@ -16,7 +16,6 @@ function query(queryOptions) {
     const { filterBy, sortBy, pagination } = queryOptions
     var bugsToReturn = [ ...bugs ]
 
-    console.log(filterBy)
     if (filterBy.txt) {
         const regExp = new RegExp(filterBy.txt, 'i')
         bugsToReturn = 
@@ -31,7 +30,7 @@ function query(queryOptions) {
     if (filterBy.labels && filterBy.labels.length > 0) {
         bugsToReturn = 
             bugsToReturn.filter(bug => 
-                filterBy.labels.every(label => bug?.labels?.includes(label)))
+                filterBy.labels.some(label => bug?.labels?.includes(label)))
     }
 
     if (sortBy.sortField === 'severity' || sortBy.sortField === 'createdAt') {
@@ -45,8 +44,10 @@ function query(queryOptions) {
     } 
 
     if (pagination.pageIdx !== undefined) {
-        const startIdx = pagination.pageIdx * pagination.pageSize
-        bugsToReturn = bugsToReturn.slice(startIdx, startIdx + pagination.pageSize)
+        const { pageIdx, pageSize} = pagination
+        
+        const startIdx = pageIdx * pageSize
+        bugsToReturn = bugsToReturn.slice(startIdx, startIdx + pageSize)
     }
 
     return Promise.resolve(bugsToReturn)
@@ -54,13 +55,11 @@ function query(queryOptions) {
 
 function getById(bugId) {
     const bug = bugs.find(bug => bug._id === bugId)
-    // pdfService.buildAnimalsPDF(bugs) //pdf bonus
     if (!bug) return Promise.reject('Bug not found!')
     return Promise.resolve(bug)
 }
 
 function remove(bugId) {
-    // bugs = bugs.filter(bug => bug._id !== bugId)
     const idx = bugs.findIndex(bug => bug._id === bugId)
     bugs.splice(idx, 1)
     return _saveBugsToFile()

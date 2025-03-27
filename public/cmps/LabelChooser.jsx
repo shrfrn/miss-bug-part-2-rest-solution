@@ -18,7 +18,7 @@ export function LabelChooser({ labels, filterBy, onSetFilterBy }) {
     }
 
     return <fieldset className="label-chooser">
-        {labels.map((label) => 
+        {labels.map(label => 
             <label key={label} className="tag">
                 <input 
                     onClick={handleChange} 
