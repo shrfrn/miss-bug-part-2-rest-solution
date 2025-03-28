@@ -3,10 +3,9 @@ body {
 }
 
 button {
-    margin: 2px;
     border: 0;
     border-radius: .2em;
-    padding: 6px 10px;
+    padding: .2rem .4rem;
     background-color: var(--gray1);
     color: whitesmoke;
     cursor: pointer;
