@@ -43,4 +43,3 @@ function doLog(level, ...args) {
         if (err) console.log('FATAL: cannot write to log file')
     })
 }
-

@@ -1,0 +1,11 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    margin-block-start: auto;
+}
+
+.pagination :first-child {
+    margin-inline-end: auto;
+}

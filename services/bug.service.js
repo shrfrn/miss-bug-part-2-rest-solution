@@ -13,6 +13,7 @@ export const bugService = {
 const bugs = utilService.readJsonFile('data/bug.json')
 
 function query(queryOptions) {
+    const res = {}
     const { filterBy, sortBy, pagination } = queryOptions
     var bugsToReturn = [ ...bugs ]
 
@@ -44,13 +45,16 @@ function query(queryOptions) {
     } 
 
     if (pagination.pageIdx !== undefined) {
-        const { pageIdx, pageSize} = pagination
+        const { pageIdx, pageSize } = pagination
+        (pageIdx)
         
         const startIdx = pageIdx * pageSize
+        res.pageCount = Math.ceil(bugsToReturn.length / pageSize)
         bugsToReturn = bugsToReturn.slice(startIdx, startIdx + pageSize)
     }
 
-    return Promise.resolve(bugsToReturn)
+    res.data = bugsToReturn
+    return Promise.resolve(res)
 }
 
 function getById(bugId) {
@@ -85,7 +89,6 @@ function _saveBugsToFile() {
                 loggerService.error('Cannot write to bugs file', err)
                 return reject(err);
             }
-            console.log('The file was saved!');
             resolve()
         });
     })
