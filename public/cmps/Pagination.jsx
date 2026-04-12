@@ -1,13 +1,16 @@
+const { useState } = React
 const PAGE_SIZE = 3
 
 export function Pagination({ pageCount, filterBy, onSetFilterBy }) {
+    const [ paginationOn, setPaginationOn ] = useState(false)
 
     function onTogglePagination(ev) {
-        const paginationOn = ev.target.checked
         if (paginationOn) {
-            onSetFilterBy({ pageIdx: 0, pageSize: PAGE_SIZE })
-        } else {
+            setPaginationOn(false)
             onSetFilterBy({ pageIdx: undefined })
+        } else {
+            setPaginationOn(true)
+            onSetFilterBy({ pageIdx: 0, pageSize: PAGE_SIZE })
         }
     }
     
@@ -18,14 +21,17 @@ export function Pagination({ pageCount, filterBy, onSetFilterBy }) {
 
     return <div className="pagination">
         <label className="tag">Pagination
-            <input onChange={onTogglePagination} type="checkbox" />
+            <input 
+                onChange={onTogglePagination} 
+                type="checkbox" 
+                checked={paginationOn} />
         </label>
         <button 
-            disabled={filterBy.pageIdx === 0} 
+            disabled={filterBy.pageIdx === 0 || !paginationOn} 
             onClick={() => onPage(-1)}>Prev</button>
 
         <button 
-            disabled={filterBy.pageIdx === pageCount - 1} 
+            disabled={filterBy.pageIdx === pageCount - 1 || !paginationOn} 
             onClick={() => onPage(1)}>Next</button>
     </div>
 }

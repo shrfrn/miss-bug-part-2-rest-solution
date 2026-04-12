@@ -46,9 +46,8 @@ function query(queryOptions) {
 
     if (pagination.pageIdx !== undefined) {
         const { pageIdx, pageSize } = pagination
-        (pageIdx)
-        
         const startIdx = pageIdx * pageSize
+        
         res.pageCount = Math.ceil(bugsToReturn.length / pageSize)
         bugsToReturn = bugsToReturn.slice(startIdx, startIdx + pageSize)
     }

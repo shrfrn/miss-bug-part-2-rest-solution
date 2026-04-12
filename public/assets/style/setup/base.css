@@ -16,3 +16,8 @@ button:hover {
     color: var(--color2);
     background-color: black;
 }
+
+button:disabled {
+    color: gray;
+    background-color: black;
+}
