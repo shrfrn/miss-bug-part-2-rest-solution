@@ -31,7 +31,7 @@ function query(queryOptions) {
     if (filterBy.labels && filterBy.labels.length > 0) {
         bugsToReturn = 
             bugsToReturn.filter(bug => 
-                filterBy.labels.some(label => bug?.labels?.includes(label)))
+                filterBy.labels.some(label => bug.labels?.includes(label)))
     }
 
     if (sortBy.sortField === 'severity' || sortBy.sortField === 'createdAt') {

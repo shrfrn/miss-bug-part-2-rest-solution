@@ -1,7 +1,7 @@
 .pagination {
     position: fixed;
     inset-block-end: 70px;
-    inset-inline-end: 3em;
+    inset-inline-start: 3em;
 
     display: flex;
     align-items: center;

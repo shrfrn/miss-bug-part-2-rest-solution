@@ -26,12 +26,13 @@ export function Pagination({ pageCount, filterBy, onSetFilterBy }) {
                 type="checkbox" 
                 checked={paginationOn} />
         </label>
-        <button 
+        
+        {paginationOn && <button 
             disabled={filterBy.pageIdx === 0 || !paginationOn} 
-            onClick={() => onPage(-1)}>Prev</button>
+            onClick={() => onPage(-1)}>Prev</button>}
 
-        <button 
+        {paginationOn && <button 
             disabled={filterBy.pageIdx === pageCount - 1 || !paginationOn} 
-            onClick={() => onPage(1)}>Next</button>
+            onClick={() => onPage(1)}>Next</button>}
     </div>
 }
