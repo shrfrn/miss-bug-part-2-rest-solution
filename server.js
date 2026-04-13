@@ -49,10 +49,15 @@ app.get('/api/bug/:bugId', (req, res) => {
 	const { bugId } = req.params
 	const { visitCountMap = [] } = req.cookies
 
-	if (visitCountMap.length >= 3) return res.status(401).send('Wait for a bit')
-	if (!visitCountMap.includes(bugId)) visitCountMap.push(bugId)
+    if (!visitCountMap.includes(bugId)) {
+        if (visitCountMap.length === 3) {
+            return res.status(401).send('Wait for a bit')
+        } else {
+            visitCountMap.push(bugId)
+        }
+    }
 
-	res.cookie('visitCountMap', visitCountMap, { maxAge: 1000 * 10 })
+	res.cookie('visitCountMap', visitCountMap, { maxAge: 1000 * 30 })
 	bugService.getById(bugId)
 		.then(bug => res.send(bug))
 		.catch(err => {

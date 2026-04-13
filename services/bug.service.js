@@ -13,7 +13,7 @@ export const bugService = {
 const bugs = utilService.readJsonFile('data/bug.json')
 
 function query(queryOptions) {
-    const res = {}
+    const results = {}
     const { filterBy, sortBy, pagination } = queryOptions
     var bugsToReturn = [ ...bugs ]
 
@@ -48,12 +48,12 @@ function query(queryOptions) {
         const { pageIdx, pageSize } = pagination
         const startIdx = pageIdx * pageSize
         
-        res.pageCount = Math.ceil(bugsToReturn.length / pageSize)
+        results.pageCount = Math.ceil(bugsToReturn.length / pageSize)
         bugsToReturn = bugsToReturn.slice(startIdx, startIdx + pageSize)
     }
 
-    res.data = bugsToReturn
-    return Promise.resolve(res)
+    results.bugs = bugsToReturn
+    return Promise.resolve(results)
 }
 
 function getById(bugId) {

@@ -28,11 +28,11 @@ export function Pagination({ pageCount, filterBy, onSetFilterBy }) {
         </label>
         
         {paginationOn && <button 
-            disabled={filterBy.pageIdx === 0 || !paginationOn} 
+            disabled={filterBy.pageIdx === 0} 
             onClick={() => onPage(-1)}>Prev</button>}
 
         {paginationOn && <button 
-            disabled={filterBy.pageIdx === pageCount - 1 || !paginationOn} 
+            disabled={filterBy.pageIdx === pageCount - 1} 
             onClick={() => onPage(1)}>Next</button>}
     </div>
 }
